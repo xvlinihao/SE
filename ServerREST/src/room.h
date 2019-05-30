@@ -18,7 +18,7 @@ public:
 
     int mode;
 
-    float feerate;
+    double feerate;
 
     int targetTemp;
 
