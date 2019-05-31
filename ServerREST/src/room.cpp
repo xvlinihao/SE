@@ -21,7 +21,3 @@ void Room::init() {
     fee=0;
     requestList.clear();
 }
-void Room::setID(int ROOMID){
-    roomid=ROOMID;
-
-}

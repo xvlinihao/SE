@@ -14,6 +14,7 @@ public:
 
     C_ATTR(index, :Path :AutoArgs )
     void index(Context *c);
+
     C_ATTR(RoomId, :Path :AutoArgs :ActionClass(REST))
     void RoomId(Context *c, const QString &roomid);
 

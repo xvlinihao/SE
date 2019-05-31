@@ -6,9 +6,14 @@
 #include"apireport.h"
 #include "root.h"
 #include"apistate.h"
+#include "serveobject.h"
+#include "scheduleobject.h"
 #include <QtSql>
 #include <Cutelyst/Plugins/Utils/Sql>
 using namespace Cutelyst;
+
+static ServeObject serve;
+static ScheduleObject schedule;
 
 ServerREST::ServerREST(QObject *parent) : Application(parent)
 {

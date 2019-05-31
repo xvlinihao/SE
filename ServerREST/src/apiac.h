@@ -25,6 +25,7 @@ public:
 
     C_ATTR(index_DELETE, :Private)//关机
     void index_DELETE(Context *c);
+
     C_ATTR(RoomId, :Path :AutoArgs :ActionClass(REST))
     void RoomId(Context *c,const QString &roomid);
 
