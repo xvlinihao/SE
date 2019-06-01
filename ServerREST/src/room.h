@@ -36,6 +36,10 @@ public:
 
     bool getOneLineRecord(record_t* r); // to do
 
+    void updateFee(int time); // to do
+
+    void saveReport();
+
     int roomid;
 
     int fee;

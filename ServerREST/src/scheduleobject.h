@@ -5,21 +5,24 @@
 #include <QList>
 #include <QVector>
 #include <QMap>
+#include <QTimer>
+#include <QJsonObject>
 #include "serveobject.h"
 
-typedef struct _ServeRoom {
+typedef struct _roominfo {
     int roomID;
-    int windSpeed;
-    int serveTime;
+    //int windSpeed;
+    int serveTimePoint;
+    int time;
     QJsonDocument r;
-}ServeRoom;
+}roominfo_t;
 
-typedef struct _WaitRoom {
-    int roomID;
-    int windSpeed;
-    int waitTime;
-    QJsonDocument r;
-}WaitRoom;
+//typedef struct _WaitRoom {
+//    int roomID;
+//    int windSpeed;
+//    int waitTime;
+//    QJsonDocument r;
+//}WaitRoom;
 
 class ScheduleObject : public QObject
 {
@@ -40,27 +43,30 @@ public:
     void deleteRoom(int roomId);
     //void dispatch(int rid, QJsonDocument r);//转给
 
-    void getbill();//not understand
+    //void getbill();//not understand
 
-    void get_state_detail(int, state_info*);
+    //void get_state_detail(int, state_info*);
 
     bool setReady(bool);
 
 private:
     void init();
 
-    QVector<WaitRoom> wait_room;
+    QVector<roominfo_t> wait_room;
 
-    QVector<ServeRoom> serve_room;
+    QVector<roominfo_t> serve_room;
 //    WaitRoom wait_rooms;
 
 //    ServeRoom serve_rooms;
 
     bool isReady;
 
+    QTimer* scheduleTimer;
+
 signals:
     void requestDispatch();
 public slots:
+    void scheduleEvent();
 };
 
 #endif // SCHEDULEOBJECT_H

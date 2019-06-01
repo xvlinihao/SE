@@ -34,7 +34,7 @@ class ServeObject : public QObject
 public:
     explicit ServeObject(QObject *parent = nullptr);
 
-~ServeObject(){}
+    ~ServeObject(){}
 
     bool init(QString, int, int, int, double, double, double);
 
@@ -46,9 +46,9 @@ public:
 
 //    bool dispatchRoom(int newRID, QJsonDocument r);
 
-    report_t getRoomReport(int roomId); // to do
+    report_t getRoomReport(const int roomId); // to do
 
-    void releaseRoom(int oldRID, int serveTime);
+    //void releaseRoom(int oldRID, int serveTime);
 
     bool isValid(const int roomid); // to do
 

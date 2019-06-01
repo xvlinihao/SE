@@ -107,6 +107,7 @@ void ApiAc::index_POST(Context *c) {
     else if (obj.contains(QStringLiteral("FanSpeed"))){
         int fanspeed = obj.value(QStringLiteral("FanSpeed")).toInt();
         schedule.updateFanspeed(roomId, fanspeed);
+        //serve.getRoom(roomId)->setFanSpeed(fanspeed);
         float feerate = serve.getRoom(roomId)->feerate;
         //float feerate = serve.getRoom(roomId)->fanspeed = fanspeed;
         QJsonObject res;

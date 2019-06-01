@@ -2,13 +2,10 @@
 
 static QMap<int, Room*> roomlist;
 
-ServeObject::ServeObject(QObject *parent) : QObject(parent)
-{
-    servedCount = 0;
+
+
+ServeObject::ServeObject(QObject *parent) : QObject(parent) {
     isReady = false;
-    for (int i = 0; i <ROOMCOUNT; i++) {
-        servedMap[i] = false;
-    }
 }
 
 /**
@@ -31,10 +28,53 @@ bool ServeObject::init(QString m, int t_hL, int t_lL, int d_tT,
     feeRate_H = fr_H;
     feeRate_M = fr_M;
     feeRate_L = fr_L;
+    if (d_tT > temp_highLimit || d_tT < temp_lowLimit) return false;
+    return true;
 }
 
 bool ServeObject::setReady(bool isReady) {
     this->isReady = isReady;
+    return this->isReady;
+}
+
+/**
+ * @brief 获得房间的报表信息
+ * @param roomId
+ * @return
+ */
+report_t ServeObject::getRoomReport(const int roomId) {
+    /*应该从数据库获得数据*/
+    report_t t = {0, 0, 0, 0, 0, 0, 0};
+    return t;
+}
+
+bool ServeObject::isValid(const int roomid) {
+    return roomlist.contains(roomid);
+}
+
+Room* ServeObject::getRoom(const int roomid) {
+    if (!isValid(roomid)) return  nullptr;
+
+    return roomlist[roomid];
+}
+
+bool ServeObject::addNewRoom(Room *newroom) {
+    if (!newroom) return false;
+    roomlist.insert(newroom->roomid, newroom);
+    return true;
+}
+
+/**
+ * @brief 删除一个房间,删除前保存report信息到数据库
+ * @param roomId
+ * @return
+ */
+bool ServeObject::deleteRoom(int roomId) {
+    if (!isValid(roomId)) return false;
+    roomlist[roomId]->saveReport();
+    delete  roomlist[roomId];
+    roomlist.remove(roomId);
+    return true;
 }
 
 /**
@@ -46,22 +86,22 @@ bool ServeObject::setReady(bool isReady) {
  * @param serveTime 旧房间的服务时长
  * @return
  */
-bool ServeObject::dispatchRoom(int newRID, int oldRID, QJsonDocument r, int serveTime)
-{
-    if (newRID >= 0 && newRID <ROOMCOUNT)
-        servedMap[newRID] = true;
-    else
-        qDebug()<<"wrong newRID"<<endl;
+//bool ServeObject::dispatchRoom(int newRID, int oldRID, QJsonDocument r, int serveTime)
+//{
+//    if (newRID >= 0 && newRID <ROOMCOUNT)
+//        servedMap[newRID] = true;
+//    else
+//        qDebug()<<"wrong newRID"<<endl;
 
-    if (oldRID >= 0 && oldRID < ROOMCOUNT)
-        servedMap[oldRID] = false;
-    else
-        qDebug()<<"wrong oldRID"<<endl;
+//    if (oldRID >= 0 && oldRID < ROOMCOUNT)
+//        servedMap[oldRID] = false;
+//    else
+//        qDebug()<<"wrong oldRID"<<endl;
 
-    rooms[oldRID].serveTime += serveTime;
-    do_request(newRID, r);
-    return true;
-}
+//    rooms[oldRID].serveTime += serveTime;
+//    do_request(newRID, r);
+//    return true;
+//}
 
 /**
  * @brief 当服务对象未到上限时，直接为新房间分配
@@ -69,40 +109,13 @@ bool ServeObject::dispatchRoom(int newRID, int oldRID, QJsonDocument r, int serv
  * @param r
  * @return
  */
-bool ServeObject::dispatchRoom(int newRID, QJsonDocument r) {
-    if (newRID >= 0 && newRID <ROOMCOUNT)
-        servedMap[newRID] = true;
-    else
-        qDebug()<<"wrong newRID"<<endl;
+//bool ServeObject::dispatchRoom(int newRID, QJsonDocument r) {
+//    if (newRID >= 0 && newRID <ROOMCOUNT)
+//        servedMap[newRID] = true;
+//    else
+//        qDebug()<<"wrong newRID"<<endl;
 
-    servedCount ++;
-    do_request(newRID, r);
-    return true;
-}
-
-/**
- * @brief 旧房间和服务对象断开连接
- * @param oldRID
- */
-void ServeObject::releaseRoom(int oldRID, int serveTime) {
-    rooms[oldRID].serveTime += serveTime;
-    servedCount --;
-}
-
-/**
- * @brief 根据Qjson的内容处理rid房间
- * @param rid
- * @param r
- */
-void ServeObject::do_request(int rid, QJsonDocument r) {
-    // to do
-}
-
-/**
- * @brief 获取给定rid房间号的房间信息
- * @param rid
- * @param s
- */
-bool ServeObject::get_fee_and_feerate(int rid, state_info *s) {
-    // to do
-}
+//    servedCount ++;
+//    do_request(newRID, r);
+//    return true;
+//}
