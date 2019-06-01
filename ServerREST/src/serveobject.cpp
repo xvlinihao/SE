@@ -21,7 +21,7 @@ ServeObject::ServeObject(QObject *parent) : QObject(parent)
  * @param fr_M  二阶费率
  * @param fr_L  一阶费率
  */
-void ServeObject::init(int m, int t_hL, int t_lL, int d_tT,
+bool ServeObject::init(QString m, int t_hL, int t_lL, int d_tT,
                   double fr_H, double fr_M, double fr_L)
 {
     temp_highLimit = t_hL;

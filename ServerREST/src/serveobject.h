@@ -26,7 +26,7 @@ public:
 
 ~ServeObject(){}
 
-    void init(int, int, int, int, double, double, double);
+    bool init(QString, int, int, int, double, double, double);
 
 //    bool get_fee_and_feerate(int, state_info*);
 
@@ -52,7 +52,7 @@ public:
 
     int default_targetTemp;
 
-    int mode;
+    QString mode;
 
     double feeRate_L;
 
