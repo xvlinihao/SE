@@ -7,8 +7,13 @@
 #include <QDebug>
 #include <QtSql>
 #include "room.h"
+#include "serveobject.h"
+#include "scheduleobject.h"
 #include <Cutelyst/Plugins/Utils/Sql>
 using namespace Cutelyst;
+
+extern ServeObject serve;
+extern ScheduleObject schedule;
 
 ApiReport::ApiReport(QObject *parent) : Controller(parent)
 {
@@ -28,5 +33,21 @@ void ApiReport::RoomId(Context *c, const QString &roomid, const QString &TypeRep
 }
 void ApiReport::RoomId_GET(Context *c, const QString &roomid, const QString &TypeReport, const QString &date)
 {
-    c->response()->body() ="wdnmd";
+    int roomId = roomid.toInt();
+    int typeReport = TypeReport.toInt();
+    int d = date.toInt();
+
+    report_t r = serve.getRoomReport(roomId);
+
+    QJsonObject res;
+    res.insert(QStringLiteral("RoomId"), roomId);
+    res.insert(QStringLiteral("TimesOfOnOff"), r.timesOnOff);
+    res.insert(QStringLiteral("Duration"), r.duration);
+    res.insert(QStringLiteral("TotalFee"), r.totalfee);
+    res.insert(QStringLiteral("TimesOfDispatch"), r.timesDispatch);
+    res.insert(QStringLiteral("NumberOfRDP"), r.timesRDP);
+    res.insert(QStringLiteral("TimesOfChangeTemp"), r.timesChangeTemp);
+    res.insert(QStringLiteral("TimesOfChangeFanSpeed"), r.timesChangeFanSpeed);
+
+    c->response()->setJsonObjectBody(res);
 }

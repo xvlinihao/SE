@@ -11,6 +11,9 @@
 typedef struct _record {
     int fanspeed;
     int servetime;
+    float feerate;
+    float fee;
+    int requestime;
 }record_t;
 
 class Room : public QObject
@@ -31,6 +34,8 @@ public:
 
     QString getState(); // to do
 
+    bool getOneLineRecord(record_t* r); // to do
+
     int roomid;
 
     int fee;
@@ -50,6 +55,10 @@ public:
     int fanspeed;
 
     QMap<int, record_t> serveRecord;
+
+    int datein;
+
+    int dateout;
 
 signals:
 

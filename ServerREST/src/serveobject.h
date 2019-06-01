@@ -18,6 +18,16 @@ typedef struct _state_info {
     int Duration;
 }state_info;
 
+typedef struct _report {
+    int timesOnOff;
+    int duration;
+    int totalfee;
+    int timesDispatch;
+    int timesRDP;
+    int timesChangeTemp;
+    int timesChangeFanSpeed;
+}report_t;
+
 class ServeObject : public QObject
 {
     Q_OBJECT
@@ -35,6 +45,8 @@ public:
 //    bool dispatchRoom(int newRID, int oldnewRID, QJsonDocument r, int serveTime);
 
 //    bool dispatchRoom(int newRID, QJsonDocument r);
+
+    report_t getRoomReport(int roomId); // to do
 
     void releaseRoom(int oldRID, int serveTime);
 
