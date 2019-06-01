@@ -21,7 +21,9 @@ class Room : public QObject
     Q_OBJECT
 public:
     explicit Room(QObject *parent = nullptr);
+
     Room(int _roomid){roomid = _roomid; init();}
+
     void init(); // to do
 
     bool setRoomTemp(const int t);
