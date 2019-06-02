@@ -21,7 +21,7 @@ typedef struct _state_info {
 typedef struct _report {
     int timesOnOff;
     int duration;
-    int totalfee;
+    double totalfee;
     int timesDispatch;
     int timesRDP;
     int timesChangeTemp;
@@ -37,8 +37,6 @@ public:
     ~ServeObject(){}
 
     bool init(QString, int, int, int, double, double, double);
-
-//    bool get_fee_and_feerate(int, state_info*);
 
     bool setReady(bool);
 

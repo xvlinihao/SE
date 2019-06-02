@@ -39,7 +39,7 @@ void ApiBill::RoomId_GET(Context *c, const QString &roomid)
 
     int datein = serve.getRoom(roomId)->datein;
     int dateout = QDateTime::currentDateTime().toSecsSinceEpoch();
-    int totalfee = serve.getRoom(roomId)->getFee();
+    double totalfee = serve.getRoom(roomId)->getFee();
 
     schedule.deleteRoom(roomId);
 

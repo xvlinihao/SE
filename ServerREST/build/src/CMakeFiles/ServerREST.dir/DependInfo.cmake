@@ -4,18 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/xvli/ServerGit/ServerREST/build/src/ServerREST_autogen/mocs_compilation.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/ServerREST_autogen/mocs_compilation.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apiac.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apiac.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apibill.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apibill.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apidetail.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apidetail.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apipower.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apipower.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apireport.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apireport.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/apistate.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/apistate.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/room.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/room.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/root.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/root.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/scheduleobject.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/scheduleobject.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/serveobject.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/serveobject.cpp.o"
-  "/home/xvli/ServerGit/ServerREST/src/serverrest.cpp" "/home/xvli/ServerGit/ServerREST/build/src/CMakeFiles/ServerREST.dir/serverrest.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/ServerREST_autogen/mocs_compilation.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/ServerREST_autogen/mocs_compilation.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apiac.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apiac.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apibill.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apibill.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apidetail.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apidetail.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apipower.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apipower.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apireport.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apireport.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/apistate.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/apistate.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/room.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/room.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/root.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/root.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/scheduleobject.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/scheduleobject.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/serveobject.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/serveobject.cpp.o"
+  "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/serverrest.cpp" "/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir/serverrest.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -25,6 +25,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
   "QT_NETWORK_LIB"
   "QT_NO_DEBUG"
   "QT_SQL_LIB"
+  "ServerREST_EXPORTS"
   )
 
 # The include file search paths:
@@ -33,11 +34,11 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../src"
   "src/ServerREST_autogen/include"
   "/usr/include/cutelyst2-qt5"
-  "/usr/include/x86_64-linux-gnu/qt5"
-  "/usr/include/x86_64-linux-gnu/qt5/QtCore"
-  "/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++"
-  "/usr/include/x86_64-linux-gnu/qt5/QtNetwork"
-  "/usr/include/x86_64-linux-gnu/qt5/QtSql"
+  "/usr/include/qt"
+  "/usr/include/qt/QtCore"
+  "/usr/lib/qt/mkspecs/linux-g++"
+  "/usr/include/qt/QtNetwork"
+  "/usr/include/qt/QtSql"
   )
 
 # Targets to which this target links.

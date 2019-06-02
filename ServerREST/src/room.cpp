@@ -12,21 +12,15 @@
 
 extern ServeObject serve;
 
-//Room::Room(QObject *parent) : QObject(parent)
-//{
-//}
-
 void Room::init() {
     serveTime = 0;
     targetTemp = 26;
     feerate = 0.08;
     mode = "HOT";
     fee = 0;
-    qDebug()<<this->roomid<<endl;
-    //requestList.clear();
 }
 
-bool Room::setRoomTemp(const int t) {
+bool Room::setRoomTemp(const double t) {
     this->targetTemp = t;
     return true;
 }
@@ -38,7 +32,7 @@ bool Room::setRoomTemp(const int t) {
  * @param fanspeed
  * @return 费率
  */
-float Room::setFanSpeed(int fanspeed) {
+double Room::setFanSpeed(int fanspeed) {
     this-> fanspeed = fanspeed;
     switch (fanspeed) {
     case 1 : this->feerate = serve.feeRate_L; break;
@@ -48,7 +42,7 @@ float Room::setFanSpeed(int fanspeed) {
     return this->feerate;
 }
 
-float Room::getFee() {
+double Room::getFee() {
     return this->fee;
 }
 
@@ -65,7 +59,7 @@ QString Room::getMode() {
     return this->mode;
 }
 
-void Room::setCurTemp(int curtemp) {
+void Room::setCurTemp(double curtemp) {
     this->currentTemp = curtemp;
     if (mode == "HOT") {
         if (currentTemp <= targetTemp) {

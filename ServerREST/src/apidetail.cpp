@@ -54,8 +54,5 @@ void ApiDetail::RoomId_GET(Context *c, const QString &roomid)
     }
 
     c->response()->setJsonArrayBody(res);
-
-
-
 }
 
