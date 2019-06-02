@@ -12,10 +12,9 @@
 
 extern ServeObject serve;
 
-Room::Room(QObject *parent) : QObject(parent)
-{
-    init();
-}
+//Room::Room(QObject *parent) : QObject(parent)
+//{
+//}
 
 void Room::init() {
     serveTime = 0;
@@ -23,6 +22,7 @@ void Room::init() {
     feerate = 0.08;
     mode = "HOT";
     fee = 0;
+    qDebug()<<this->roomid<<endl;
     //requestList.clear();
 }
 

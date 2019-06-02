@@ -7,4 +7,6 @@
 #include "EWIEGA46WW/moc_apistate.cpp"
 #include "EWIEGA46WW/moc_room.cpp"
 #include "EWIEGA46WW/moc_root.cpp"
+#include "EWIEGA46WW/moc_scheduleobject.cpp"
+#include "EWIEGA46WW/moc_serveobject.cpp"
 #include "EWIEGA46WW/moc_serverrest.cpp"

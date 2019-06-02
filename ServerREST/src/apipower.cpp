@@ -39,6 +39,7 @@ void ApiPower::index_GET(Context *c)
 
     QJsonObject res;
     res.insert(QStringLiteral("state"), QStringLiteral("ready"));
+    c->response()->setJsonObjectBody(res);
 }
 
 /**
@@ -80,4 +81,5 @@ void ApiPower::index_POST(Context *c)
 
     QJsonObject res;
     res.insert(QStringLiteral("isOK"), isOk);
+    c->response()->setJsonObjectBody(res);
 }

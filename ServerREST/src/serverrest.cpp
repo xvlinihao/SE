@@ -12,8 +12,8 @@
 #include <Cutelyst/Plugins/Utils/Sql>
 using namespace Cutelyst;
 
-static ServeObject serve;
-static ScheduleObject schedule;
+ServeObject serve;
+ScheduleObject schedule;
 
 ServerREST::ServerREST(QObject *parent) : Application(parent)
 {

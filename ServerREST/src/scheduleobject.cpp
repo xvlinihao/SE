@@ -59,23 +59,26 @@ void ScheduleObject::updateFanspeed(int roomId, int fanSpeed) {
  * @param roomId
  */
 void ScheduleObject::releaseRoom(int roomId) {
-    QVector<roominfo_t>::iterator iter;
+    int i = 0;
     bool isFind = false;
-    for (iter = wait_room.begin(); iter != wait_room.end(); iter++) {
-        if (iter->roomID == roomId) {
-            serve.getRoom(roomId)->updateFee(iter->serveTimePoint - iter->time);
-            wait_room.erase(iter);
+    for (i = 0; i < wait_room.size(); i++) {
+        if (wait_room[i].roomID == roomId) {
+            serve.getRoom(roomId)->updateFee(wait_room[i].serveTimePoint - wait_room[i].time);
+            wait_room.remove(i);
             isFind = true;
         }
     }
     if (isFind) return;
-
-    for (iter = serve_room.begin(); iter != serve_room.end(); iter ++) {
-        if (iter->roomID == roomId) {
-            serve.getRoom(roomId)->updateFee(iter->serveTimePoint - iter->time);
-            serve_room.erase(iter);
+    qDebug()<<"1\n";
+    for (i = 0; i < serve_room.size(); i++) {
+        if (serve_room[i].roomID == roomId) {
+            qDebug()<<serve.getRoom(roomId)<<endl;
+            serve.getRoom(roomId)->updateFee(serve_room[i].serveTimePoint - serve_room[i].time);
+            serve_room.remove(i);
+            isFind = true;
         }
     }
+    qDebug()<<"2\n";
 }
 
 void ScheduleObject::deleteRoom(int roomId) {

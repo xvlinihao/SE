@@ -37,8 +37,10 @@ void ApiState::RoomId_GET(Context *c, const QString &roomid)
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
-    int roomId = obj.value(QStringLiteral("RoomId")).toInt();
-
+    qDebug()<<"room:"<<roomid<<endl;
+    int roomId = roomid.toInt();
+    qDebug()<<"roomid:"<<roomId<<endl;
+    if (!serve.isValid(roomId)) return;
     Room* r = serve.getRoom(roomId);
     QString state = r->getState();
     int currentTemp = r->currentTemp;

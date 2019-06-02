@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include "serverrest.h"
 
 #define hot "HOT"
 #define cool "COOL"
@@ -20,7 +21,7 @@ class Room : public QObject
 {
     Q_OBJECT
 public:
-    explicit Room(QObject *parent = nullptr);
+    //explicit Room(QObject *parent = nullptr);
 
     Room(int _roomid){roomid = _roomid; init();}
 

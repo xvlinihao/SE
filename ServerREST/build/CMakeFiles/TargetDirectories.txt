@@ -1,6 +1,6 @@
-/home/xvli/ServerREST/build/CMakeFiles/rebuild_cache.dir
-/home/xvli/ServerREST/build/CMakeFiles/edit_cache.dir
-/home/xvli/ServerREST/build/src/CMakeFiles/rebuild_cache.dir
-/home/xvli/ServerREST/build/src/CMakeFiles/ServerREST.dir
-/home/xvli/ServerREST/build/src/CMakeFiles/edit_cache.dir
-/home/xvli/ServerREST/build/src/CMakeFiles/ServerREST_autogen.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/CMakeFiles/rebuild_cache.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/CMakeFiles/edit_cache.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/rebuild_cache.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/edit_cache.dir
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/build/src/CMakeFiles/ServerREST_autogen.dir

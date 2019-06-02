@@ -1,8 +1,6 @@
-#include "serveobject.h"
+﻿#include "serveobject.h"
 
-static QMap<int, Room*> roomlist;
-
-
+QMap<int, Room*> roomlist;
 
 ServeObject::ServeObject(QObject *parent) : QObject(parent) {
     isReady = false;
@@ -60,7 +58,7 @@ Room* ServeObject::getRoom(const int roomid) {
 
 bool ServeObject::addNewRoom(Room *newroom) {
     if (!newroom) return false;
-    roomlist.insert(newroom->roomid, newroom);
+    roomlist[newroom->roomid] = newroom;
     return true;
 }
 
