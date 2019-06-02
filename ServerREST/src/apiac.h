@@ -40,6 +40,12 @@ public:
 
     C_ATTR(RoomId_POST, :Private)//
     void RoomId_POST(Context *c,const QString &roomid);
+
+    C_ATTR(notify, :Local :AutoArgs :ActionClass(REST))
+    void notify(Context *c);
+
+    C_ATTR(notify_PUT, :Private)
+    void notify_PUT(Context *c);
 };
 
 #endif //APIAC_H
