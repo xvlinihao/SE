@@ -31,6 +31,8 @@ bool Room::setRoomTemp(const int t) {
     return true;
 }
 
+
+
 /**
  * @brief 设置风速
  * @param fanspeed
@@ -61,6 +63,24 @@ QString Room::getState() {
 
 QString Room::getMode() {
     return this->mode;
+}
+
+void Room::setCurTemp(int curtemp) {
+    this->currentTemp = curtemp;
+    if (mode == "HOT") {
+        if (currentTemp <= targetTemp) {
+            state = "SLEEP";
+        }
+    }
+    else if (mode == "COOL") {
+        if (currentTemp >= targetTemp) {
+            state = "SLEEP";
+        }
+    }
+}
+
+bool Room::isNeedSleep() {
+    return state == "SLEEP";
 }
 
 /**
