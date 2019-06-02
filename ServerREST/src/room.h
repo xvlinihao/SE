@@ -37,6 +37,8 @@ public:
 
     QString getState(); // to do
 
+    QString getMode();
+
     bool getOneLineRecord(record_t* r); // to do
 
     void updateFee(int time); // to do
@@ -51,8 +53,10 @@ public:
 
     QString mode;
 
+    QString state;
+
     float feerate;
-    /*what*/
+
     int targetTemp;
 
     int serveTime;

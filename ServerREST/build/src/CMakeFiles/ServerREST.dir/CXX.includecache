@@ -44,6 +44,10 @@ QMap
 serverrest.h
 /run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/serverrest.h
 
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/scheduleobject.cpp
+scheduleobject.h
+/run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/scheduleobject.h
+
 /run/media/mashiro/Normal/noChinese_study/软件工程项目/开发资料/SE/ServerREST/src/scheduleobject.h
 QObject
 -

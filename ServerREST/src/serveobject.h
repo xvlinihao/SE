@@ -42,13 +42,7 @@ public:
 
     bool setReady(bool);
 
-//    bool dispatchRoom(int newRID, int oldnewRID, QJsonDocument r, int serveTime);
-
-//    bool dispatchRoom(int newRID, QJsonDocument r);
-
     report_t getRoomReport(const int roomId); // to do
-
-    //void releaseRoom(int oldRID, int serveTime);
 
     bool isValid(const int roomid); // to do
 

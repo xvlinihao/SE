@@ -56,6 +56,10 @@ int Room::getDuration() {
 }
 
 QString Room::getState() {
+    return this->state;
+}
+
+QString Room::getMode() {
     return this->mode;
 }
 
