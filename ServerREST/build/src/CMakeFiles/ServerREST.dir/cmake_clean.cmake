@@ -1,7 +1,6 @@
 file(REMOVE_RECURSE
   "ServerREST_autogen"
-  "CMakeFiles/ServerREST_autogen.dir/AutogenOldSettings.txt"
-  "CMakeFiles/ServerREST.dir/ServerREST_autogen/mocs_compilation.cpp.o"
+  "CMakeFiles/ServerREST_autogen.dir/AutogenOldSettings.cmake"
   "CMakeFiles/ServerREST.dir/apiac.cpp.o"
   "CMakeFiles/ServerREST.dir/apibill.cpp.o"
   "CMakeFiles/ServerREST.dir/apidetail.cpp.o"
@@ -13,6 +12,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/ServerREST.dir/scheduleobject.cpp.o"
   "CMakeFiles/ServerREST.dir/serveobject.cpp.o"
   "CMakeFiles/ServerREST.dir/serverrest.cpp.o"
+  "CMakeFiles/ServerREST.dir/ServerREST_autogen/mocs_compilation.cpp.o"
   "libServerREST.pdb"
   "libServerREST.so"
 )

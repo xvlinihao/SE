@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'root.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.3)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'root.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.3. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -54,7 +54,7 @@ QT_MOC_LITERAL(10, 95, 1) // "c"
 static const uint qt_meta_data_Root[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        4,   14, // classinfo
        3,   22, // methods
@@ -86,7 +86,7 @@ static const uint qt_meta_data_Root[] = {
 void Root::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Root *>(_o);
+        Root *_t = static_cast<Root *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->index((*reinterpret_cast< Context*(*)>(_a[1]))); break;
@@ -122,14 +122,10 @@ void Root::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject Root::staticMetaObject = { {
-    &Controller::staticMetaObject,
-    qt_meta_stringdata_Root.data,
-    qt_meta_data_Root,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject Root::staticMetaObject = {
+    { &Controller::staticMetaObject, qt_meta_stringdata_Root.data,
+      qt_meta_data_Root,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *Root::metaObject() const
