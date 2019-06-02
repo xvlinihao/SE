@@ -10,6 +10,8 @@
 #include "serveobject.h"
 #include <Cutelyst/Plugins/Utils/Sql>
 
+#define TEMPSUB 5
+
 extern ServeObject serve;
 
 void Room::init() {
@@ -62,12 +64,12 @@ QString Room::getMode() {
 void Room::setCurTemp(double curtemp) {
     this->currentTemp = curtemp;
     if (mode == "HOT") {
-        if (currentTemp <= targetTemp) {
+        if (currentTemp >= targetTemp) {
             state = "SLEEP";
         }
     }
     else if (mode == "COOL") {
-        if (currentTemp >= targetTemp) {
+        if (currentTemp <= targetTemp) {
             state = "SLEEP";
         }
     }
@@ -75,6 +77,17 @@ void Room::setCurTemp(double curtemp) {
 
 bool Room::isNeedSleep() {
     return state == "SLEEP";
+}
+
+bool Room::isNeedWake() {
+    if (state != "SLEEP") return false;
+    if (mode == "HOT" && currentTemp <= targetTemp - TEMPSUB) {
+        return true;
+    }
+    else if (mode == "COOL" && currentTemp >= targetTemp - TEMPSUB) {
+        return true;
+    }
+    return false;
 }
 
 /**

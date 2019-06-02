@@ -72,9 +72,9 @@ void ApiPower::index_POST(Context *c)
         int tempHighLimit = obj.value("TempHighLimit").toInt();
         int tempLowLimit = obj.value("TempLowLimit").toInt();
         int defaultTemp = obj.value("DefaultTargetTemp").toInt();
-        float feerate_h = obj.value("FeeRateH").toDouble();
-        float feerate_m = obj.value("FeeRateM").toDouble();
-        float feerate_l = obj.value("FeeRateL").toDouble();
+        double feerate_h = obj.value("FeeRateH").toDouble();
+        double feerate_m = obj.value("FeeRateM").toDouble();
+        double feerate_l = obj.value("FeeRateL").toDouble();
 
         isOk = serve.init(mode, tempHighLimit, tempLowLimit, defaultTemp, feerate_h, feerate_m, feerate_l);
     }

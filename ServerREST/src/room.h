@@ -35,6 +35,8 @@ public:
 
     bool isNeedSleep();
 
+    bool isNeedWake();
+
     double getFee(); // to do
 
     int getDuration(); // to do

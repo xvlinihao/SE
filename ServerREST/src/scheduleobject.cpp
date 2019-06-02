@@ -116,6 +116,9 @@ QString ScheduleObject::updateCurTemp(int roomId, double curTemp) {
         releaseRoom(roomId);
         return QString("SLEEP");
     }
+    if (serve.getRoom(roomId)->isNeedWake()) {
+        switchToServe(roomId);
+    }
     return serve.getRoom(roomId)->getState();
 }
 
