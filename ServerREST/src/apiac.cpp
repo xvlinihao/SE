@@ -151,7 +151,7 @@ void ApiAc::RoomId_DELETE(Context *c, const QString &roomid)
     int dur = serve.getRoom(roomId)->getDuration();
 
     schedule.releaseRoom(roomId);
-
+    qDebug()<<roomlist<<endl;
     QJsonObject res;
     res.insert(QStringLiteral("Fee"), fee);
     res.insert(QStringLiteral("Duration"), dur);
