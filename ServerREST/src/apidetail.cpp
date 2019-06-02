@@ -33,7 +33,7 @@ void ApiDetail::RoomId(Context *c, const QString &roomid)
 void ApiDetail::RoomId_GET(Context *c, const QString &roomid)
 {
     int roomId=roomid.toInt();
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"detail_get:"<<doc<<endl;
     const QJsonObject obj = doc.object();
 
     int datein = obj.value("DateIn").toInt();

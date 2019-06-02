@@ -34,7 +34,7 @@ void ApiBill::RoomId(Context *c, const QString &roomid)
 void ApiBill::RoomId_GET(Context *c, const QString &roomid)
 {
     int roomId=roomid.toInt();
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"bill_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
 
     int datein = serve.getRoom(roomId)->datein;

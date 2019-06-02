@@ -44,7 +44,6 @@ void ApiAc::index_PUT(Context *c)
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     QString roomid = QString::number(obj.value(QStringLiteral("RoomId")).toInt());
-    qDebug()<<"room:"<<roomid<<endl;
     RoomId_PUT(c,roomid);
 }
 
@@ -53,7 +52,7 @@ void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
     qDebug()<<Q_FUNC_INFO<<roomid;
     if (!serve.isReady) return;
     int roomId=roomid.toInt();
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
 
     if (!serve.isValid(roomId)) {
@@ -86,7 +85,7 @@ extern QMap<int, Room*> roomlist;
  */
 void ApiAc::index_POST(Context *c) {
     if (!serve.isReady) return;
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_post:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
@@ -133,7 +132,7 @@ void ApiAc::index_DELETE(Context *c) {
 void ApiAc::RoomId_DELETE(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
-    qDebug()<<&serve<<endl;
+    qDebug()<<"ac_delete:"<<c->request()->bodyData().toJsonDocument()<<endl;
     if (!serve.isReady) return;
 
     int roomId = roomid.toInt();
@@ -165,7 +164,7 @@ void ApiAc::index_GET(Context *c) {
 
 void ApiAc::RoomId_GET(Context *c,const QString &roomid) {
     if (!serve.isReady) return;
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_get:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
@@ -194,7 +193,7 @@ void ApiAc::notify(Context *c)
 }
 void ApiAc::notify_PUT(Context *c)
 {
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_notify_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
     double CurrentRoomTemp=obj.value(QStringLiteral("CurrentRoomTemp")).toDouble();

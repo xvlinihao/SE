@@ -35,6 +35,7 @@ void ApiPower::index(Context *c)
  */
 void ApiPower::index_GET(Context *c)
 {
+    qDebug()<<"power_get"<<endl;
     serve.setReady(true);
 
     QJsonObject res;
@@ -48,6 +49,7 @@ void ApiPower::index_GET(Context *c)
  */
 void ApiPower::index_PUT(Context *c)
 {
+    qDebug()<<"power_put"<<endl;
     serve.setReady(false);
 
     QJsonObject res;
@@ -65,7 +67,7 @@ void ApiPower::index_POST(Context *c)
     bool isOk = false;
     if (serve.isReady) isOk = false;
     else {
-        const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+        const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"power_post:"<<doc<<endl;
         const QJsonObject obj = doc.object();
 
         QString mode = obj.value("Mode").toString();
