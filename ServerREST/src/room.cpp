@@ -17,9 +17,11 @@ extern ServeObject serve;
 void Room::init() {
     serveTime = 0;
     targetTemp = 26;
-    feerate = 0.08;
+    feerate = 0;
+    fanspeed = 1;
     mode = "HOT";
     fee = 0;
+    datein = QDateTime::currentDateTime().toSecsSinceEpoch();
 }
 
 bool Room::setRoomTemp(const double t) {

@@ -59,8 +59,13 @@ void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
     if (!serve.isValid(roomId)) {
         /* roomid 不存在, 添加新的room, 并放入调度队列*/
         Room* newroom = new Room(roomId);
+        newroom->mode = serve.mode;
+        newroom->setRoomTemp(serve.default_targetTemp);
+        newroom->setFanSpeed(1);
         serve.addNewRoom(newroom);
     }
+
+
 
     schedule.switchToServe(roomId); //执行调度
 

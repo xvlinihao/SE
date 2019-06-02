@@ -53,7 +53,7 @@ public:
 
     int roomid;
 
-    int fee;
+    double fee;
 
     double currentTemp;
 
