@@ -31,6 +31,10 @@ public:
 
     float setFanSpeed(int fanspeed); //to do
 
+    void setCurTemp(int curtemp); // to do
+
+    bool isNeedSleep();
+
     float getFee(); // to do
 
     int getDuration(); // to do

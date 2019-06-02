@@ -104,6 +104,22 @@ void ScheduleObject::deleteRoom(int roomId) {
 }
 
 /**
+ * @brief 更新房间温度
+ * @param roomId
+ * @param curTemp
+ * @return
+ */
+QString ScheduleObject::updateCurTemp(int roomId, double curTemp) {
+    /*还有问题*/
+    serve.getRoom(roomId)->setCurTemp(curTemp);
+    if (serve.getRoom(roomId)->isNeedSleep()) {
+        releaseRoom(roomId);
+        return QString("SLEEP");
+    }
+    return serve.getRoom(roomId)->getState();
+}
+
+/**
  * @brief 调度函数 未确定
  * @param r
  */

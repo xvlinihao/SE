@@ -205,6 +205,13 @@ void ApiAc::notify_PUT(Context *c)
 {
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
     const QJsonObject obj = doc.object();
-    int roomid = obj.value(QStringLiteral("RoomId")).toInt();
+    int roomId = obj.value(QStringLiteral("RoomId")).toInt();
     double CurrentRoomTemp=obj.value(QStringLiteral("CurrentRoomTemp")).toDouble();
+
+    Room* r = serve.getRoom(roomId);
+    r->setCurTemp(CurrentRoomTemp);
+
+    QJsonObject res;
+    res.insert(QStringLiteral("state"), r->getState());
+    c->response()->setJsonObjectBody(res);
 }

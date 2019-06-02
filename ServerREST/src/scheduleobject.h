@@ -38,6 +38,8 @@ public:
 
     void updateFanspeed(int roomId, int fanSpeed); // to do
 
+    QString updateCurTemp(int roomId, double curTemp); // to do
+
     void releaseRoom(int roomId);
 
     void deleteRoom(int roomId);
