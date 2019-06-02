@@ -168,7 +168,7 @@ void ApiAc::index_GET(Context *c) {
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
-    QString roomid = obj.value(QStringLiteral("RoomId")).toString();
+    QString roomid = QString::number(obj.value(QStringLiteral("RoomId")).toInt());
     RoomId_GET(c,roomid);
 }
 
@@ -197,4 +197,14 @@ void ApiAc::RoomId_POST(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
 }
-
+void ApiAc::notify(Context *c)
+{
+    qDebug()<<Q_FUNC_INFO;
+}
+void ApiAc::notify_PUT(Context *c)
+{
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonObject obj = doc.object();
+    int roomid = obj.value(QStringLiteral("RoomId")).toInt();
+    double CurrentRoomTemp=obj.value(QStringLiteral("CurrentRoomTemp")).toDouble();
+}
