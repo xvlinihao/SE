@@ -33,6 +33,7 @@ void ApiReport::RoomId(Context *c, const QString &roomid, const QString &TypeRep
 }
 void ApiReport::RoomId_GET(Context *c, const QString &roomid, const QString &TypeReport, const QString &date)
 {
+    qDebug()<<"report_get:"<<c->request()->bodyData().toJsonDocument()<<endl;
     int roomId = roomid.toInt();
     int typeReport = TypeReport.toInt();
     int d = date.toInt();

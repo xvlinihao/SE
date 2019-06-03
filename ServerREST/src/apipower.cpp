@@ -35,6 +35,7 @@ void ApiPower::index(Context *c)
  */
 void ApiPower::index_GET(Context *c)
 {
+    qDebug()<<"power_get"<<endl;
     serve.setReady(true);
 
     QJsonObject res;
@@ -48,6 +49,7 @@ void ApiPower::index_GET(Context *c)
  */
 void ApiPower::index_PUT(Context *c)
 {
+    qDebug()<<"power_put"<<endl;
     serve.setReady(false);
 
     QJsonObject res;
@@ -63,18 +65,23 @@ void ApiPower::index_PUT(Context *c)
 void ApiPower::index_POST(Context *c)
 {
     bool isOk = false;
-    if (serve.isReady) isOk = false;
+    if (serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("State"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
     else {
-        const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+        const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"power_post:"<<doc<<endl;
         const QJsonObject obj = doc.object();
 
         QString mode = obj.value("Mode").toString();
         int tempHighLimit = obj.value("TempHighLimit").toInt();
         int tempLowLimit = obj.value("TempLowLimit").toInt();
         int defaultTemp = obj.value("DefaultTargetTemp").toInt();
-        float feerate_h = obj.value("FeeRateH").toDouble();
-        float feerate_m = obj.value("FeeRateM").toDouble();
-        float feerate_l = obj.value("FeeRateL").toDouble();
+        double feerate_h = obj.value("FeeRateH").toDouble();
+        double feerate_m = obj.value("FeeRateM").toDouble();
+        double feerate_l = obj.value("FeeRateL").toDouble();
 
         isOk = serve.init(mode, tempHighLimit, tempLowLimit, defaultTemp, feerate_h, feerate_m, feerate_l);
     }

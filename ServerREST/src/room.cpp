@@ -10,28 +10,41 @@
 #include "serveobject.h"
 #include <Cutelyst/Plugins/Utils/Sql>
 
-extern ServeObject serve;
+#define TEMPSUB 5
 
-//Room::Room(QObject *parent) : QObject(parent)
-//{
-//}
+extern ServeObject serve;
 
 void Room::init() {
     serveTime = 0;
     targetTemp = 26;
-    feerate = 0.08;
+    feerate = 0;
+    fanspeed = 1;
     mode = "HOT";
     fee = 0;
+<<<<<<< HEAD
     fanspeed=1;
     qDebug()<<this->roomid<<endl;
     //requestList.clear();
+=======
+    isHavePerson = true;
+    datein = QDateTime::currentDateTime().toSecsSinceEpoch();
+
+    /*初始化具体房间的报表信息*/
+    report.roomId = roomid;
+    report.timesOnOff = 0;
+    report.duration = 0;
+    report.totalfee = 0;
+    report.timesDispatch = 0;
+    report.timesChangeTemp = 0;
+    report.timesChangeFanSpeed = 0;
+>>>>>>> 1382a983c804737bdb8a93eccd74047c90821189
 }
 
-bool Room::setRoomTemp(const int t) {
+bool Room::setRoomTemp(const double t) {
+    report.updateTimesChangeTemp();
     this->targetTemp = t;
     return true;
 }
-
 
 
 /**
@@ -39,7 +52,8 @@ bool Room::setRoomTemp(const int t) {
  * @param fanspeed
  * @return 费率
  */
-float Room::setFanSpeed(int fanspeed) {
+double Room::setFanSpeed(int fanspeed) {
+    report.updateTimesChangeFanSpeed();
     this-> fanspeed = fanspeed;
     switch (fanspeed) {
     case 1 : this->feerate = serve.feeRate_L; break;
@@ -49,10 +63,9 @@ float Room::setFanSpeed(int fanspeed) {
     return this->feerate;
 }
 
-float Room::getFee() {
+double Room::getFee() {
     return this->fee;
 }
-
 
 int Room::getDuration() {
     return this->serveTime;
@@ -66,7 +79,7 @@ QString Room::getMode() {
     return this->mode;
 }
 
-void Room::setCurTemp(int curtemp) {
+void Room::setCurTemp(double curtemp) {
     this->currentTemp = curtemp;
     if (mode == "HOT") {
         if (currentTemp >= targetTemp) {
@@ -82,6 +95,17 @@ void Room::setCurTemp(int curtemp) {
 
 bool Room::isNeedSleep() {
     return state == "SLEEP";
+}
+
+bool Room::isNeedWake() {
+    if (state != "SLEEP") return false;
+    if (mode == "HOT" && currentTemp <= targetTemp - TEMPSUB) {
+        return true;
+    }
+    else if (mode == "COOL" && currentTemp >= targetTemp - TEMPSUB) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -109,11 +133,22 @@ bool Room::getOneLineRecord(record_t *r) {
 void Room::updateFee(int time) {
     serveTime += time;
     fee += time*feerate;
+//    report.updateTotalFee(fee);
+//    report.updateDuration(time);
 }
 
 /**
  * @brief 将报表记录更新进数据库
  */
 void Room::saveReport() {
+    report.updateDuration(serveTime);
+    report.updateTotalFee(fee);
+}
 
+/**
+ * @brief 返回报表
+ * @return
+ */
+report_t* Room::getReport() {
+    return &report;
 }

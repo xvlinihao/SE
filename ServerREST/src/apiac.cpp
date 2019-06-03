@@ -35,7 +35,6 @@ void ApiAc::index(Context *c)
  * @param c
  * @param roomid
  */
-
 void ApiAc::index_PUT(Context *c)
 {
     if (!serve.isReady) return;
@@ -44,81 +43,78 @@ void ApiAc::index_PUT(Context *c)
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     QString roomid = QString::number(obj.value(QStringLiteral("RoomId")).toInt());
-    qDebug()<<"room:"<<roomid<<endl;
     RoomId_PUT(c,roomid);
 }
 
 void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
-    if (!serve.isReady) return;
+    if (!serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
     int roomId=roomid.toInt();
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
 
     if (!serve.isValid(roomId)) {
         /* roomid 不存在, 添加新的room, 并放入调度队列*/
         Room* newroom = new Room(roomId);
+        newroom->mode = serve.mode;
+        newroom->setRoomTemp(serve.default_targetTemp);
+        newroom->setFanSpeed(1);
         serve.addNewRoom(newroom);
-        qDebug()<<"add newroom\n"<<serve.isValid(roomId)<<' '<<serve.getRoom(roomId)<<' '<<roomId;
     }
 
+    serve.getRoom(roomId)->getReport()->updateTimesOnOff();
     schedule.switchToServe(roomId); //执行调度
 
-    bool isWait = serve.getRoom(roomId)->isWait;
+
     QJsonObject res;
-    res.insert(QStringLiteral("State"), isWait ? QStringLiteral("wait") : QStringLiteral("ok"));
+    res.insert(QStringLiteral("State"), serve.getRoom(roomId)->getState());
     res.insert(QStringLiteral("Mode"), serve.mode);
     res.insert(QStringLiteral("TargetTmp"), serve.default_targetTemp);
     res.insert(QStringLiteral("FeeRate"), serve.getRoom(roomId)->feerate);
     res.insert(QStringLiteral("Fee"), serve.getRoom(roomId)->fee);
     c->response()->setJsonObjectBody(res);
-
-//    c->response()->setJsonObjectBody({
-//                                         {QStringLiteral("State"),QStringLiteral("wait")},
-//                                         {QStringLiteral("Mode"),QStringLiteral("COOL")},
-//                                         {QStringLiteral("TargetTemp"),room->targetTemp},
-//                                         {QStringLiteral("Feerate"),room->feerate},
-//                                         {QStringLiteral("Fee"),room->fee}
-//                                     });
-    /*const QStringList uuids = s.childGroups();
-    c->response()->setJsonArrayBody(QJsonArray::fromStringList(uuids));*/
 }
 
-extern QMap<int, Room*> roomlist;
 /**
  * @brief 调整房间号温度
  * @param c
  */
 void ApiAc::index_POST(Context *c) {
-    if (!serve.isReady) return;
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    if (!serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
+
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_post:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
-    qDebug()<<serve.isValid(roomId)<<endl;
-    qDebug()<<roomlist.size()<<endl;
-    qDebug()<<roomlist<<endl;
     if (!serve.isValid(roomId)) {
         // warning to do
         qDebug()<<"no room "<<roomId<<endl;
         return;
     }
     if (obj.contains(QStringLiteral("TargetTemp"))) {
-        qDebug()<<"set target temp\n";
-        int setTemp = obj.value(QStringLiteral("TargetTemp")).toInt();
+        double setTemp = obj.value(QStringLiteral("TargetTemp")).toInt();
         bool isOk = serve.getRoom(roomId)->setRoomTemp(setTemp);
+
         QJsonObject res;
         res.insert(QStringLiteral("isOK"), isOk);
         c->response()->setJsonObjectBody(res);
     }
     else if (obj.contains(QStringLiteral("FanSpeed"))){
-        qDebug()<<"set fan speed\n";
         int fanspeed = obj.value(QStringLiteral("FanSpeed")).toInt();
         schedule.updateFanspeed(roomId, fanspeed);
-        //serve.getRoom(roomId)->setFanSpeed(fanspeed);
-        float feerate = serve.getRoom(roomId)->feerate;
-        //float feerate = serve.getRoom(roomId)->fanspeed = fanspeed;
+        double feerate = serve.getRoom(roomId)->feerate;
+
         QJsonObject res;
         res.insert(QStringLiteral("FeeRate"), feerate);
         c->response()->setJsonObjectBody(res);
@@ -142,16 +138,16 @@ void ApiAc::index_DELETE(Context *c) {
 void ApiAc::RoomId_DELETE(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
-    qDebug()<<&serve<<endl;
+    qDebug()<<"ac_delete:"<<c->request()->bodyData().toJsonDocument()<<endl;
     if (!serve.isReady) return;
 
     int roomId = roomid.toInt();
-    qDebug()<<"3\n";
-    float fee = serve.getRoom(roomId)->getFee();
+
+    double fee = serve.getRoom(roomId)->getFee();
     int dur = serve.getRoom(roomId)->getDuration();
 
     schedule.releaseRoom(roomId);
-    qDebug()<<roomlist<<endl;
+
     QJsonObject res;
     res.insert(QStringLiteral("Fee"), fee);
     res.insert(QStringLiteral("Duration"), dur);
@@ -163,7 +159,12 @@ void ApiAc::RoomId_DELETE(Context *c, const QString &roomid)
  * @param c
  */
 void ApiAc::index_GET(Context *c) {
-    if (!serve.isReady) return;
+    if (!serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
     qDebug()<<Q_FUNC_INFO;
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
     const QJsonObject obj = doc.object();
@@ -173,14 +174,19 @@ void ApiAc::index_GET(Context *c) {
 }
 
 void ApiAc::RoomId_GET(Context *c,const QString &roomid) {
-    if (!serve.isReady) return;
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    if (!serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_get:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
 
-    float feerate = serve.getRoom(roomId)->feerate;
-    float fee = serve.getRoom(roomId)->fee;
+    double feerate = serve.getRoom(roomId)->feerate;
+    double fee = serve.getRoom(roomId)->fee;
 
     QJsonObject res;
     res.insert(QStringLiteral("Fee"), fee);
@@ -197,13 +203,15 @@ void ApiAc::RoomId_POST(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
 }
+
 void ApiAc::notify(Context *c)
 {
     qDebug()<<Q_FUNC_INFO;
 }
+
 void ApiAc::notify_PUT(Context *c)
 {
-    const QJsonDocument doc = c->request()->bodyData().toJsonDocument();
+    const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_notify_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
     double CurrentRoomTemp=obj.value(QStringLiteral("CurrentRoomTemp")).toDouble();

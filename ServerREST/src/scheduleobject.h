@@ -36,7 +36,7 @@ public:
 
     void switchToServe(int roomId); // to do
 
-    void updateFanspeed(int roomId, int fanSpeed); // to do
+    void updateFanspeed(int roomId, int FanSpeed); // to do
 
     QString updateCurTemp(int roomId, double curTemp); // to do
 

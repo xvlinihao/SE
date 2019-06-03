@@ -225,23 +225,23 @@ void ScheduleObject::releaseRoom(int roomId) {
 }
 
 void ScheduleObject::deleteRoom(int roomId) {
-    QVector<roominfo_t>::iterator iter;
+    int i = 0;
     bool isFind = false;
-    for (iter = wait_room.begin(); iter != wait_room.end(); iter++) {
-        if (iter->roomID == roomId) {
-            serve.getRoom(roomId)->updateFee(iter->serveTimePoint - iter->time);
+    for (i = 0; i < wait_room.size(); i++) {
+        if (wait_room[i].roomID == roomId) {
+            serve.getRoom(roomId)->updateFee(wait_room[i].serveTimePoint - wait_room[i].time);
             serve.deleteRoom(roomId);
-            wait_room.erase(iter);
+            wait_room.remove(i);
             isFind = true;
         }
     }
     if (isFind) return;
 
-    for (iter = serve_room.begin(); iter != serve_room.end(); iter ++) {
-        if (iter->roomID == roomId) {
-            serve.getRoom(roomId)->updateFee(iter->serveTimePoint - iter->time);
+    for (i = 0; i < serve_room.size(); i ++) {
+        if (serve_room[i].roomID == roomId) {
+            serve.getRoom(roomId)->updateFee(serve_room[i].serveTimePoint - serve_room[i].time);
             serve.deleteRoom(roomId);
-            serve_room.erase(iter);
+            serve_room.remove(i);
         }
     }
 }
@@ -258,6 +258,9 @@ QString ScheduleObject::updateCurTemp(int roomId, double curTemp) {
     if (serve.getRoom(roomId)->isNeedSleep()) {
         releaseRoom(roomId);
         return QString("SLEEP");
+    }
+    if (serve.getRoom(roomId)->isNeedWake()) {
+        switchToServe(roomId);
     }
     return serve.getRoom(roomId)->getState();
 }
@@ -281,9 +284,15 @@ void ScheduleObject::scheduleEvent() {
     int i,j;
     int longest=0;
     int shortest=100;
+<<<<<<< HEAD
     int sroom;
     int replaceroomid;
     for(i=0;i<serve_room.size()&&serve_room.size()>0;i++){//计算服务对象的服务时间
+=======
+    int sroom = 0;
+    int replaceroomid = 0;
+    for(i=0;i<serve_room.size()&&serve_room.size()>0;i++){
+>>>>>>> 1382a983c804737bdb8a93eccd74047c90821189
         serve_room[i].time--;
         qDebug()<<"服务时间--"<<serve_room[i].roomID<<serve_room[i].time;
         if(serve.getRoom(serve_room[i].roomID)->state=="SLEEP"||serve.getRoom(serve_room[i].roomID)->state=="OFF")
@@ -317,17 +326,25 @@ void ScheduleObject::scheduleEvent() {
             r.serveTimePoint = 0;
             r.time = 2;
             wait_room.push_back(r);
+<<<<<<< HEAD
             qDebug()<<"放入了wait队列"<<r.roomID;
+=======
+            serve.getRoom(r.roomID)->getReport()->updateTimesDispatch();
+>>>>>>> 1382a983c804737bdb8a93eccd74047c90821189
             roominfo_t r1;
             r1.serveTimePoint=10;
             r1.time=10;
             r1.roomID=wait_room[i].roomID;
             serve_room.push_back(r1);
+<<<<<<< HEAD
             serve.getRoom(r1.roomID)->state="ON";
             qDebug()<<"放入了服务队列"<<r1.roomID;
             for(j=0;j<wait_room.size();j++)
                 if(wait_room[j].roomID==r1.roomID)
                     wait_room.remove(j);
+=======
+            serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
+>>>>>>> 1382a983c804737bdb8a93eccd74047c90821189
         }
     }
     if(serve_room.size()<3&&wait_room.size()>0){
@@ -336,6 +353,7 @@ void ScheduleObject::scheduleEvent() {
         r1.time=10;
         r1.roomID=wait_room[sroom].roomID;
         serve_room.push_back(r1);
+        serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
         wait_room.remove(sroom);
         serve.getRoom(r1.roomID)->state="ON";
         qDebug()<<"放入了服务队列"<<r1.roomID;

@@ -47,17 +47,17 @@ report_t ServeObject::getRoomReport(const int roomId) {
 }
 
 bool ServeObject::isValid(const int roomid) {
-    return roomlist.contains(roomid);
+    return roomlist.contains(roomid) && roomlist[roomid]->isHavePerson;
 }
 
 Room* ServeObject::getRoom(const int roomid) {
     if (!isValid(roomid)) return  nullptr;
-
     return roomlist[roomid];
 }
 
 bool ServeObject::addNewRoom(Room *newroom) {
     if (!newroom) return false;
+    if (roomlist.contains(newroom->roomid)) delete roomlist[newroom->roomid];
     roomlist[newroom->roomid] = newroom;
     return true;
 }
@@ -70,8 +70,9 @@ bool ServeObject::addNewRoom(Room *newroom) {
 bool ServeObject::deleteRoom(int roomId) {
     if (!isValid(roomId)) return false;
     roomlist[roomId]->saveReport();
-    delete  roomlist[roomId];
-    roomlist.remove(roomId);
+    roomlist[roomId]->isHavePerson = false;
+    //delete  roomlist[roomId];
+    //roomlist.remove(roomId);
     return true;
 }
 

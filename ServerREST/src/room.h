@@ -12,10 +12,30 @@
 typedef struct _record {
     int fanspeed;
     int servetime;
-    float feerate;
-    float fee;
-    int requestime;
+    double feerate;
+    double fee;
+    int requestime; //调度时更新
 }record_t;
+
+/*报表统计*/
+typedef struct _report {
+    int roomId;
+    int timesOnOff;
+    int duration;
+    double totalfee;
+    int timesDispatch;
+    int timesRDP;
+    int timesChangeTemp;
+    int timesChangeFanSpeed;
+
+    void updateTimesOnOff() {timesOnOff ++;}
+    void updateDuration(int d) {duration = d;}
+    void updateTotalFee(double f) {totalfee = f;}
+    void updateTimesDispatch() {timesDispatch ++;}
+    void updateTimesRDP() {timesRDP += 1;}
+    void updateTimesChangeTemp() {timesChangeTemp ++;}
+    void updateTimesChangeFanSpeed() {timesChangeFanSpeed ++;}
+}report_t;
 
 class Room : public QObject
 {
@@ -27,15 +47,17 @@ public:
 
     void init(); // to do
 
-    bool setRoomTemp(const int t);
+    bool setRoomTemp(const double t);
 
-    float setFanSpeed(int fanspeed); //to do
+    double setFanSpeed(int fanspeed); //to do
 
-    void setCurTemp(int curtemp); // to do
+    void setCurTemp(double curtemp); // to do
 
     bool isNeedSleep();
 
-    float getFee(); // to do
+    bool isNeedWake();
+
+    double getFee(); // to do
 
     int getDuration(); // to do
 
@@ -49,23 +71,25 @@ public:
 
     void saveReport();
 
+    report_t* getReport();
+
     int roomid;
 
-    int fee;
+    double fee;
 
-    int currentTemp;
+    double currentTemp;
 
     QString mode;
 
     QString state;
 
-    float feerate;
+    double feerate;
 
-    int targetTemp;
+    double targetTemp;
 
     int serveTime;
 
-    bool isWait;
+    bool isHavePerson;
 
     int fanspeed;
 
@@ -74,6 +98,8 @@ public:
     int datein;
 
     int dateout;
+
+    report_t report;
 
 signals:
 
