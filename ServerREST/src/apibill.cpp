@@ -33,10 +33,11 @@ void ApiBill::RoomId(Context *c, const QString &roomid)
 }
 void ApiBill::RoomId_GET(Context *c, const QString &roomid)
 {
+    qDebug()<<Q_FUNC_INFO<<roomid;
     int roomId=roomid.toInt();
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"bill_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
-
+    if (serve.isValid(roomId)) return;
     int datein = serve.getRoom(roomId)->datein;
     int dateout = QDateTime::currentDateTime().toSecsSinceEpoch();
     double totalfee = serve.getRoom(roomId)->getFee();

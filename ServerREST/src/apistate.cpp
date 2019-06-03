@@ -33,9 +33,10 @@ void ApiState::RoomId(Context *c, const QString &roomid)
 }
 void ApiState::RoomId_GET(Context *c, const QString &roomid)
 {
-    if (!serve.isReady) return;
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"state_get:"<<doc<<endl;
     const QJsonObject obj = doc.object();
+    if (!serve.isReady) return;
+
     QString b=doc.toJson();
     qDebug()<<"room:"<<roomid<<endl;
     int roomId = roomid.toInt();
