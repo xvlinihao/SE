@@ -22,6 +22,7 @@ void Room::init() {
     feerate = 0.08;
     mode = "HOT";
     fee = 0;
+    fanspeed=1;
     qDebug()<<this->roomid<<endl;
     //requestList.clear();
 }
@@ -68,12 +69,12 @@ QString Room::getMode() {
 void Room::setCurTemp(int curtemp) {
     this->currentTemp = curtemp;
     if (mode == "HOT") {
-        if (currentTemp <= targetTemp) {
+        if (currentTemp >= targetTemp) {
             state = "SLEEP";
         }
     }
     else if (mode == "COOL") {
-        if (currentTemp >= targetTemp) {
+        if (currentTemp <= targetTemp) {
             state = "SLEEP";
         }
     }
