@@ -51,7 +51,7 @@ void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
     qDebug()<<Q_FUNC_INFO<<roomid;
     if (!serve.isReady) {
         QJsonObject res;
-        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        res.insert(QStringLiteral("State"), QStringLiteral("OFF"));
         c->response()->setJsonObjectBody(res);
         return;
     }
