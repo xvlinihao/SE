@@ -18,16 +18,6 @@ typedef struct _state_info {
     int Duration;
 }state_info;
 
-typedef struct _report {
-    int timesOnOff;
-    int duration;
-    double totalfee;
-    int timesDispatch;
-    int timesRDP;
-    int timesChangeTemp;
-    int timesChangeFanSpeed;
-}report_t;
-
 class ServeObject : public QObject
 {
     Q_OBJECT

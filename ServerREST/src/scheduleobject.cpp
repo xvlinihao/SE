@@ -229,8 +229,8 @@ void ScheduleObject::scheduleEvent() {
     int i,j;
     int longest=0;
     int shortest=100;
-    int sroom;
-    int replaceroomid;
+    int sroom = 0;
+    int replaceroomid = 0;
     for(i=0;i<serve_room.size()&&serve_room.size()>0;i++){
         serve_room[i].time--;
     }
@@ -258,11 +258,13 @@ void ScheduleObject::scheduleEvent() {
             r.serveTimePoint = 0;
             r.time = 2;
             wait_room.push_back(r);
+            serve.getRoom(r.roomID)->getReport()->updateTimesDispatch();
             roominfo_t r1;
             r1.serveTimePoint=10;
             r1.time=10;
             r1.roomID=wait_room[i].roomID;
             serve_room.push_back(r1);
+            serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
         }
     }
     if(serve_room.size()<3&&wait_room.size()>0){
@@ -271,6 +273,7 @@ void ScheduleObject::scheduleEvent() {
         r1.time=10;
         r1.roomID=wait_room[sroom].roomID;
         serve_room.push_back(r1);
+        serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
         wait_room.remove(sroom);
     }
 }

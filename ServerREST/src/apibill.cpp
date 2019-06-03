@@ -31,6 +31,12 @@ void ApiBill::RoomId(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;
 }
+
+/**
+ * @brief 打印房间账单
+ * @param c
+ * @param roomid
+ */
 void ApiBill::RoomId_GET(Context *c, const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO<<roomid;

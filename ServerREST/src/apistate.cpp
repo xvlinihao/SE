@@ -27,20 +27,25 @@ void ApiState::index(Context *c)
 {
     c->response()->body() = "Matched Controller::ApiState in ApiState.";
 }
+
 void ApiState::RoomId(Context *c, const QString &roomid)
 {
     c->response()->body() = "Matched Controller::ApiState in ApiState.";
 }
+
 void ApiState::RoomId_GET(Context *c, const QString &roomid)
 {
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"state_get:"<<doc<<endl;
     const QJsonObject obj = doc.object();
-    if (!serve.isReady) return;
+    if (!serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("State"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
 
     QString b=doc.toJson();
-    qDebug()<<"room:"<<roomid<<endl;
     int roomId = roomid.toInt();
-    qDebug()<<"roomid:"<<roomId<<endl;
     if (!serve.isValid(roomId)) return;
     Room* r = serve.getRoom(roomId);
     QString state = r->getState();

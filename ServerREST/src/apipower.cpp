@@ -65,7 +65,12 @@ void ApiPower::index_PUT(Context *c)
 void ApiPower::index_POST(Context *c)
 {
     bool isOk = false;
-    if (serve.isReady) isOk = false;
+    if (serve.isReady) {
+        QJsonObject res;
+        res.insert(QStringLiteral("State"), QStringLiteral("OFF"));
+        c->response()->setJsonObjectBody(res);
+        return;
+    }
     else {
         const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"power_post:"<<doc<<endl;
         const QJsonObject obj = doc.object();

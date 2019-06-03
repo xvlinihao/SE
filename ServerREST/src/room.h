@@ -17,6 +17,26 @@ typedef struct _record {
     int requestime; //调度时更新
 }record_t;
 
+/*报表统计*/
+typedef struct _report {
+    int roomId;
+    int timesOnOff;
+    int duration;
+    double totalfee;
+    int timesDispatch;
+    int timesRDP;
+    int timesChangeTemp;
+    int timesChangeFanSpeed;
+
+    void updateTimesOnOff() {timesOnOff ++;}
+    void updateDuration(int d) {duration = d;}
+    void updateTotalFee(double f) {totalfee = f;}
+    void updateTimesDispatch() {timesDispatch ++;}
+    void updateTimesRDP() {timesRDP += 1;}
+    void updateTimesChangeTemp() {timesChangeTemp ++;}
+    void updateTimesChangeFanSpeed() {timesChangeFanSpeed ++;}
+}report_t;
+
 class Room : public QObject
 {
     Q_OBJECT
@@ -51,6 +71,8 @@ public:
 
     void saveReport();
 
+    report_t* getReport();
+
     int roomid;
 
     double fee;
@@ -67,7 +89,7 @@ public:
 
     int serveTime;
 
-    bool isWait;
+    bool isHavePerson;
 
     int fanspeed;
 
@@ -76,6 +98,8 @@ public:
     int datein;
 
     int dateout;
+
+    report_t report;
 
 signals:
 

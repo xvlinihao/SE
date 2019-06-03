@@ -21,14 +21,24 @@ void Room::init() {
     fanspeed = 1;
     mode = "HOT";
     fee = 0;
+    isHavePerson = true;
     datein = QDateTime::currentDateTime().toSecsSinceEpoch();
+
+    /*初始化具体房间的报表信息*/
+    report.roomId = roomid;
+    report.timesOnOff = 0;
+    report.duration = 0;
+    report.totalfee = 0;
+    report.timesDispatch = 0;
+    report.timesChangeTemp = 0;
+    report.timesChangeFanSpeed = 0;
 }
 
 bool Room::setRoomTemp(const double t) {
+    report.updateTimesChangeTemp();
     this->targetTemp = t;
     return true;
 }
-
 
 
 /**
@@ -37,6 +47,7 @@ bool Room::setRoomTemp(const double t) {
  * @return 费率
  */
 double Room::setFanSpeed(int fanspeed) {
+    report.updateTimesChangeFanSpeed();
     this-> fanspeed = fanspeed;
     switch (fanspeed) {
     case 1 : this->feerate = serve.feeRate_L; break;
@@ -49,7 +60,6 @@ double Room::setFanSpeed(int fanspeed) {
 double Room::getFee() {
     return this->fee;
 }
-
 
 int Room::getDuration() {
     return this->serveTime;
@@ -117,11 +127,22 @@ bool Room::getOneLineRecord(record_t *r) {
 void Room::updateFee(int time) {
     serveTime += time;
     fee += time*feerate;
+//    report.updateTotalFee(fee);
+//    report.updateDuration(time);
 }
 
 /**
  * @brief 将报表记录更新进数据库
  */
 void Room::saveReport() {
+    report.updateDuration(serveTime);
+    report.updateTotalFee(fee);
+}
 
+/**
+ * @brief 返回报表
+ * @return
+ */
+report_t* Room::getReport() {
+    return &report;
 }
