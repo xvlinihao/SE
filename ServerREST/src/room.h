@@ -67,6 +67,8 @@ public:
 
     bool getOneLineRecord(record_t* r); // to do
 
+    void addRequestRecord();
+
     void updateFee(int time); // to do
 
     void saveReport();

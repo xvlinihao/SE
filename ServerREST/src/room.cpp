@@ -107,6 +107,20 @@ bool Room::isNeedWake() {
 }
 
 /**
+ * @brief 添加一条请求记录
+ */
+void Room::addRequestRecord() {
+    int date = QDateTime::currentDateTime().toSecsSinceEpoch();
+    record_t r;
+    r.requestime = date;
+    r.fee = fee;
+    r.feerate = feerate;
+    r.fanspeed = fanspeed;
+    r.servetime = serveTime;
+    serveRecord.insert(date, r);
+}
+
+/**
  * @brief 每次获得一条详单记录
  * @param r
  * @return 超出返回false, 每超出返回true
@@ -134,6 +148,7 @@ void Room::updateFee(int time) {
 //    report.updateTotalFee(fee);
 //    report.updateDuration(time);
 }
+
 
 /**
  * @brief 将报表记录更新进数据库

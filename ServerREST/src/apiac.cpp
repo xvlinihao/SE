@@ -51,7 +51,7 @@ void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
     qDebug()<<Q_FUNC_INFO<<roomid;
     if (!serve.isReady) {
         QJsonObject res;
-        res.insert(QStringLiteral("state"), QStringLiteral("OFF"));
+        res.insert(QStringLiteral("State"), QStringLiteral("OFF"));
         c->response()->setJsonObjectBody(res);
         return;
     }
@@ -69,6 +69,7 @@ void ApiAc::RoomId_PUT(Context *c,const QString &roomid)
     }
 
     serve.getRoom(roomId)->getReport()->updateTimesOnOff();
+    serve.getRoom(roomId)->addRequestRecord();
     schedule.switchToServe(roomId); //执行调度
 
 
@@ -97,6 +98,9 @@ void ApiAc::index_POST(Context *c) {
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
+
+    serve.getRoom(roomId)->addRequestRecord();
+
     if (!serve.isValid(roomId)) {
         // warning to do
         qDebug()<<"no room "<<roomId<<endl;
@@ -142,7 +146,7 @@ void ApiAc::RoomId_DELETE(Context *c, const QString &roomid)
     if (!serve.isReady) return;
 
     int roomId = roomid.toInt();
-
+    serve.getRoom(roomId)->addRequestRecord();
     double fee = serve.getRoom(roomId)->getFee();
     int dur = serve.getRoom(roomId)->getDuration();
 
@@ -184,7 +188,7 @@ void ApiAc::RoomId_GET(Context *c,const QString &roomid) {
     const QJsonObject obj = doc.object();
     QString b=doc.toJson();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
-
+    serve.getRoom(roomId)->addRequestRecord();
     double feerate = serve.getRoom(roomId)->feerate;
     double fee = serve.getRoom(roomId)->fee;
 
@@ -214,6 +218,8 @@ void ApiAc::notify_PUT(Context *c,const QString &roomid)
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_notify_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();
     int roomId = obj.value(QStringLiteral("RoomId")).toInt();
+    serve.getRoom(roomId)->addRequestRecord();
+
     double CurrentRoomTemp=obj.value(QStringLiteral("CurrentRoomTemp")).toDouble();
 
     Room* r = serve.getRoom(roomId);
