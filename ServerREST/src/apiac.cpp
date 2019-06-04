@@ -208,12 +208,12 @@ void ApiAc::RoomId_POST(Context *c, const QString &roomid)
     qDebug()<<Q_FUNC_INFO<<roomid;
 }
 
-void ApiAc::notify(Context *c)
+void ApiAc::notify(Context *c,const QString &roomid)
 {
     qDebug()<<Q_FUNC_INFO;
 }
 
-void ApiAc::notify_PUT(Context *c)
+void ApiAc::notify_PUT(Context *c,const QString &roomid)
 {
     const QJsonDocument doc = c->request()->bodyData().toJsonDocument(); qDebug()<<"ac_notify_put:"<<doc<<endl;
     const QJsonObject obj = doc.object();

@@ -40,7 +40,7 @@ bool ServeObject::setReady(bool isReady) {
  * @param roomId
  * @return
  */
-report_t ServeObject::getRoomReport(const int roomId) {
+report_t ServeObject::getRoomReport(const int roomId,int time,int type) {
     /*应该从数据库获得数据*/
     report_t t = {0, 0, 0, 0, 0, 0, 0};
     return t;

@@ -30,7 +30,7 @@ public:
 
     bool setReady(bool);
 
-    report_t getRoomReport(const int roomId); // to do
+    report_t getRoomReport(const int roomId,int time,int type); // to do
 
     bool isValid(const int roomid); // to do
 

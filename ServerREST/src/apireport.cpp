@@ -38,7 +38,7 @@ void ApiReport::RoomId_GET(Context *c, const QString &roomid, const QString &Typ
     int typeReport = TypeReport.toInt();
     int d = date.toInt();
 
-    report_t r = serve.getRoomReport(roomId);
+    report_t r = serve.getRoomReport(roomId,typeReport,d);
 
     QJsonObject res;
     res.insert(QStringLiteral("RoomId"), roomId);

@@ -21,11 +21,9 @@ void Room::init() {
     fanspeed = 1;
     mode = "HOT";
     fee = 0;
-<<<<<<< HEAD
     fanspeed=1;
     qDebug()<<this->roomid<<endl;
     //requestList.clear();
-=======
     isHavePerson = true;
     datein = QDateTime::currentDateTime().toSecsSinceEpoch();
 
@@ -37,7 +35,6 @@ void Room::init() {
     report.timesDispatch = 0;
     report.timesChangeTemp = 0;
     report.timesChangeFanSpeed = 0;
->>>>>>> 1382a983c804737bdb8a93eccd74047c90821189
 }
 
 bool Room::setRoomTemp(const double t) {
@@ -158,6 +155,7 @@ void Room::updateFee(int time) {
 void Room::saveReport() {
     report.updateDuration(serveTime);
     report.updateTotalFee(fee);
+    //
 }
 
 /**
