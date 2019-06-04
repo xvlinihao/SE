@@ -310,9 +310,6 @@ void ScheduleObject::schedule(QJsonObject r) {
  * @brief 定时器调用函数
  */
 void ScheduleObject::scheduleEvent() {
-<<<<<<< HEAD
-
-=======
     /*
      * 每分钟调度, 更新两个队列的time, 另外servetimepoint只上次风速调整时间.
      * 在等待队列里面, time 为负表示挂起状态,不更新,但检查当前温度和设定温度,来决定调度
@@ -401,5 +398,4 @@ void ScheduleObject::scheduleEvent() {
         serve.getRoom(r1.roomID)->state="ON";
         qDebug()<<"放入了服务队列"<<r1.roomID;
     }
->>>>>>> e2ffd519c51e79e0c7712a467783f602aa91d6ce
 }

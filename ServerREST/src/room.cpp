@@ -77,13 +77,16 @@ QString Room::getMode() {
 }
 
 void Room::setCurTemp(double curtemp) {
+    int tmp  = currentTemp;
     this->currentTemp = curtemp;
     if (mode == "HOT") {
+        if (tmp > currentTemp) {fee += (tmp - currentTemp);}
         if (currentTemp >= targetTemp) {
             state = "SLEEP";
         }
     }
     else if (mode == "COOL") {
+        if (tmp < currentTemp) {fee += (currentTemp - tmp);}
         if (currentTemp <= targetTemp) {
             state = "SLEEP";
         }
