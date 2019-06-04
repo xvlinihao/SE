@@ -42,10 +42,10 @@ public:
     void RoomId_POST(Context *c,const QString &roomid);
 
     C_ATTR(notify, :Local :AutoArgs :ActionClass(REST))
-    void notify(Context *c);
+    void notify(Context *c, const QString &roomid);
 
     C_ATTR(notify_PUT, :Private)
-    void notify_PUT(Context *c);
+    void notify_PUT(Context *c, const QString &roomid);
 };
 
 #endif //APIAC_H

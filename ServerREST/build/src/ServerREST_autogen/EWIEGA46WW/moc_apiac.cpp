@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'apiac.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.3)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'apiac.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.3. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -65,7 +65,7 @@ QT_MOC_LITERAL(19, 217, 6) // "roomid"
 static const uint qt_meta_data_ApiAc[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
       12,   14, // classinfo
       12,   38, // methods
@@ -100,8 +100,8 @@ static const uint qt_meta_data_ApiAc[] = {
       10,    2,  123,   16, 0x02 /* Public */,
       11,    2,  128,   16, 0x02 /* Public */,
       12,    2,  133,   16, 0x02 /* Public */,
-      13,    1,  138,   16, 0x02 /* Public */,
-      15,    1,  141,   16, 0x02 /* Public */,
+      13,    2,  138,   16, 0x02 /* Public */,
+      15,    2,  143,   16, 0x02 /* Public */,
 
  // methods: parameters
     QMetaType::Void, 0x80000000 | 17,   18,
@@ -114,8 +114,8 @@ static const uint qt_meta_data_ApiAc[] = {
     QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
     QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
     QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
-    QMetaType::Void, 0x80000000 | 17,   18,
-    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
+    QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
 
        0        // eod
 };
@@ -123,7 +123,7 @@ static const uint qt_meta_data_ApiAc[] = {
 void ApiAc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<ApiAc *>(_o);
+        ApiAc *_t = static_cast<ApiAc *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->index((*reinterpret_cast< Context*(*)>(_a[1]))); break;
@@ -136,8 +136,8 @@ void ApiAc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 7: _t->RoomId_DELETE((*reinterpret_cast< Context*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 8: _t->RoomId_PUT((*reinterpret_cast< Context*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 9: _t->RoomId_POST((*reinterpret_cast< Context*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 10: _t->notify((*reinterpret_cast< Context*(*)>(_a[1]))); break;
-        case 11: _t->notify_PUT((*reinterpret_cast< Context*(*)>(_a[1]))); break;
+        case 10: _t->notify((*reinterpret_cast< Context*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 11: _t->notify_PUT((*reinterpret_cast< Context*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -231,14 +231,10 @@ void ApiAc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject ApiAc::staticMetaObject = { {
-    &Controller::staticMetaObject,
-    qt_meta_stringdata_ApiAc.data,
-    qt_meta_data_ApiAc,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject ApiAc::staticMetaObject = {
+    { &Controller::staticMetaObject, qt_meta_stringdata_ApiAc.data,
+      qt_meta_data_ApiAc,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *ApiAc::metaObject() const
