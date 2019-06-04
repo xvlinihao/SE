@@ -1,5 +1,14 @@
 ﻿#include "serveobject.h"
-
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QSettings>
+#include <QUuid>
+#include <QDebug>
+#include <QtSql>
+#include "room.h"
+#include "serveobject.h"
+#include <Cutelyst/Plugins/Utils/Sql>
 QMap<int, Room*> roomlist;
 
 ServeObject::ServeObject(QObject *parent) : QObject(parent) {
@@ -42,7 +51,25 @@ bool ServeObject::setReady(bool isReady) {
  */
 report_t ServeObject::getRoomReport(const int roomId,int time,int type) {
     /*应该从数据库获得数据*/
-    report_t t = {0, 0, 0, 0, 0, 0, 0};
+    report_t t={0,0,0,0,0,0,0};
+    t.roomId=roomId;
+   QSqlQuery query = CPreparedSqlQueryThreadForDB("SELECT * FROM report WHERE datein>:time AND RoomId=:roomId", "MyDB");
+   query.bindValue(":time",time);
+   query.bindValue(":roomId",roomId);
+   if (query.exec()) {
+       while(query.next()){
+           t.timesOnOff+=query.value(2).toInt();
+           t.duration+=query.value(3).toInt();
+           t.totalfee+=query.value(4).toFloat();
+           t.timesDispatch+=query.value(5).toInt();
+           t.timesRDP+=query.value(5).toInt();
+           t.timesChangeTemp+=query.value(6).toInt();
+           t.timesChangeFanSpeed+=query.value(7).toInt();
+           qDebug()<<"datein:"<<query.value(0).toInt()<<query.value(1).toInt()<<query.value(2).toInt()<<query.value(3).toInt()
+                  <<query.value(4).toFloat()<<query.value(5).toInt()<<query.value(6).toInt()<<query.value(7).toInt()<<query.value(8).toInt();
+       }
+   }
+
     return t;
 }
 

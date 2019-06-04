@@ -158,7 +158,21 @@ void Room::updateFee(int time) {
 void Room::saveReport() {
     report.updateDuration(serveTime);
     report.updateTotalFee(fee);
-    //
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("INSERT INTO report VALUES(:datein,:RoomId,:TimesOfOnOff,:Duration,:TotalFee,:TimesOfDispatch,:NumberOfRDR,:TimesOfChangeTemp,:TimesOfChangeFanSpeed)", "MyDB");
+    query.bindValue(":datein",datein);
+    query.bindValue(":RoomId",report.roomId);
+    query.bindValue(":TimesOfOnOff",report.timesOnOff);
+    query.bindValue(":Duration",report.duration);
+    query.bindValue(":TotalFee",report.totalfee);
+    query.bindValue(":TimesOfDispatch",report.timesDispatch);
+    query.bindValue(":NumberOfRDR",report.timesRDP);
+    query.bindValue(":TimesOfChangeTemp",report.timesChangeTemp);
+    query.bindValue(":TimesOfChangeFanSpeed",report.timesChangeFanSpeed);
+    if (query.exec()) {
+            query.first();
+             qDebug()<<"datein:"<<query.value(0).toInt()<<query.value(1).toInt()<<query.value(2).toInt()<<query.value(3).toInt()
+                    <<query.value(4).toFloat()<<query.value(5).toInt()<<query.value(6).toInt()<<query.value(7).toInt()<<query.value(8).toInt();
+         }
 }
 
 /**
