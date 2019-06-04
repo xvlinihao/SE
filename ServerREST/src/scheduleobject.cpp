@@ -24,7 +24,7 @@ void ScheduleObject::switchToServe(int roomId) {
         roominfo_t s;
         s.roomID = roomId;
         //s.windSpeed = serve.getRoom(roomId)->fanspeed;
-        s.serveTimePoint = s.time = 10;
+        s.serveTimePoint = s.time = 0;
         //s.time = 10;
         serve_room.push_back(s);
         qDebug()<<"现在有这么多个房间"<<serve_room.size();
@@ -46,14 +46,15 @@ void ScheduleObject::switchToServe(int roomId) {
  * @param roomId
  * @param fanSpeed
  */
+//waittime--，servetime++
 void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
-    /*QVector<roominfo_t>::iterator iter;
+    QVector<roominfo_t>::iterator iter;
     for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
         if (iter->roomID == roomId) {
-            serve.getRoom(roomId)->updateFee(iter->serveTimePoint-iter->time);
+            serve.getRoom(roomId)->updateFee(iter->time-iter->serveTimePoint);
             iter->serveTimePoint = iter->time;
         }
-    }*/
+    }
     qDebug()<<Q_FUNC_INFO;
     serve.getRoom(roomId)->setFanSpeed(FanSpeed);
     int requestfan=FanSpeed;//请求的风速
@@ -74,6 +75,13 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
     }
     if(flag==1){
         serve.getRoom(roomId)->setFanSpeed(FanSpeed);
+        QVector<roominfo_t>::iterator iter;
+        for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+            if (iter->roomID == roomId) {
+                serve.getRoom(roomId)->updateFee(iter->time-iter->serveTimePoint);
+                iter->serveTimePoint = iter->time;
+            }
+        }
     }
     else if(flag==0){//房间不在服务队列里
         qDebug()<<"房间不在服务队列里";
@@ -101,10 +109,17 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
                 r.time = 2;
                 wait_room.push_back(r);
                 qDebug()<<"放入了wait队列"<<r.roomID;
+                QVector<roominfo_t>::iterator iter;
+                for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+                    if (iter->roomID == r.roomID) {
+                        serve.getRoom(r.roomID)->updateFee(iter->time-iter->serveTimePoint);
+                        iter->serveTimePoint = iter->time;
+                    }
+                }
                 serve.getRoom(serve_room[replaceroomid].roomID)->state="WAIT";
                 roominfo_t r1;
-                r1.serveTimePoint=10;
-                r1.time=10;
+                r1.serveTimePoint=0;
+                r1.time=0;
                 r1.roomID=roomId;
                 serve_room.push_back(r1);
                 serve.getRoom(roomId)->state="ON";
@@ -130,10 +145,17 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
                 r.time = 2;
                 wait_room.push_back(r);
                  qDebug()<<"放入了wait队列"<<r.roomID;
+                 QVector<roominfo_t>::iterator iter;
+                 for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+                     if (iter->roomID == r.roomID) {
+                         serve.getRoom(r.roomID)->updateFee(iter->time-iter->serveTimePoint);
+                         iter->serveTimePoint = iter->time;
+                     }
+                 }
                 serve.getRoom(serve_room[replaceroomid].roomID)->state="WAIT";
                 roominfo_t r1;
-                r1.serveTimePoint=10;
-                r1.time=10;
+                r1.serveTimePoint=0;
+                r1.time=0;
                 r1.roomID=roomId;
                 serve_room.push_back(r1);
                 serve.getRoom(roomId)->state="ON";
@@ -147,9 +169,9 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
             qDebug()<<"大于服务队列某个对象的风速";
             for(i=0;i<3;i++){
                 if(fanspeed[i]<requestfan){
-                    if(longest<(serve_room[i].serveTimePoint-serve_room[i].time))
+                    if(longest<(serve_room[i].time-serve_room[i].serveTimePoint))
                     {
-                        longest=serve_room[i].time;
+                        longest=serve_room[i].time-serve_room[i].serveTimePoint;
                         replaceroomid=i;
                     }
                 }
@@ -159,8 +181,16 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
             r.serveTimePoint = 0;
             r.time = 2;
             wait_room.push_back(r);
-            qDebug()<<"放入了wait队列"<<roomId;
+            qDebug()<<"放入了wait队列"<<r.roomID;
+            QVector<roominfo_t>::iterator iter;
+            for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+                if (iter->roomID == r.roomID) {
+                    serve.getRoom(r.roomID)->updateFee(iter->time-iter->serveTimePoint);
+                    iter->serveTimePoint = iter->time;
+                }
+            }
             serve.getRoom(serve_room[replaceroomid].roomID)->state="WAIT";
+            serve.getRoom(r.roomID)->getReport()->updateTimesDispatch();
             roominfo_t r1;
             r1.serveTimePoint=10;
             r1.time=10;
@@ -172,6 +202,7 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
             serve.getRoom(roomId)->state="ON";
 
             qDebug()<<"放入了服务队列"<<roomId;
+            serve.getRoom(roomId)->getReport()->updateTimesDispatch();
         }
         else if(requestfan==minfan){//时间片轮转
             qDebug()<<"//时间片轮转";
@@ -181,6 +212,7 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
             r1.roomID=roomId;
             wait_room.push_back(r1);
              qDebug()<<"放入了wait队列"<<roomId;
+             serve.getRoom(roomId)->getReport()->updateTimesDispatch();
             serve.getRoom(roomId)->state="WAIT";
         }
         else if(requestfan<minfan){//等待释放对象
@@ -191,6 +223,7 @@ void ScheduleObject::updateFanspeed(int roomId, int FanSpeed) {
             r1.roomID=roomId;
             wait_room.push_back(r1);
              qDebug()<<"放入了wait队列"<<r1.roomID;
+             serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
             serve.getRoom(roomId)->state="WAIT";
         }
     }
@@ -277,5 +310,96 @@ void ScheduleObject::schedule(QJsonObject r) {
  * @brief 定时器调用函数
  */
 void ScheduleObject::scheduleEvent() {
+<<<<<<< HEAD
 
+=======
+    /*
+     * 每分钟调度, 更新两个队列的time, 另外servetimepoint只上次风速调整时间.
+     * 在等待队列里面, time 为负表示挂起状态,不更新,但检查当前温度和设定温度,来决定调度
+     */
+    int i,j;
+    int longest=0;
+    int shortest=100;
+    int sroom=0;
+    int replaceroomid=0;
+    QVector<roominfo_t>::iterator iter;
+    for(i=0;i<serve_room.size()&&serve_room.size()>0;i++){//计算服务对象的服务时间
+
+        serve_room[i].time++;
+        qDebug()<<"服务时间++"<<serve_room[i].roomID<<serve_room[i].time;
+        if(serve.getRoom(serve_room[i].roomID)->state=="SLEEP"||serve.getRoom(serve_room[i].roomID)->state=="OFF")
+        for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+            if (iter->roomID == serve_room[i].roomID) {
+                serve.getRoom(serve_room[i].roomID)->updateFee(iter->time-iter->serveTimePoint);
+                iter->serveTimePoint = iter->time;
+            }
+        }
+
+        serve_room.remove(i);
+            //移除队列和改变风速要updatefee
+    }
+    for(i=0;i<wait_room.size()&&wait_room.size()>0;i++){//计算等待队列的等待时间
+        if(wait_room[i].time!=1000)
+        {
+            wait_room[i].time--;
+            qDebug()<<"房间等待时间--"<<wait_room[i].roomID<<wait_room[i].time;
+            if(wait_room[i].time<shortest){
+                shortest=wait_room[i].time;
+                sroom=i;
+            }
+            qDebug()<<"房间等待时间最小"<<wait_room[sroom].roomID<<shortest;
+        }
+    }
+    for(i=0;i<wait_room.size()&&wait_room.size()>0;i++){//时间片轮转处理
+         qDebug()<<"时间片轮转处理";
+        if(wait_room[i].time==0){
+            for(j=0;j<3&&serve_room.size()==3;j++){
+                if(longest<(serve_room[j].time-serve_room[j].serveTimePoint))
+                {
+                    longest=serve_room[j].time-serve_room[j].serveTimePoint;
+                    replaceroomid=i;
+                }
+                 qDebug()<<"房间服务时间最大"<<serve_room[replaceroomid].roomID<<longest;
+            }
+            roominfo_t r = serve_room[replaceroomid];
+            serve_room.remove(replaceroomid);
+            r.serveTimePoint = 0;
+            r.time = 2;
+            wait_room.push_back(r);
+            QVector<roominfo_t>::iterator iter;
+            for (iter = serve_room.begin(); iter != serve_room.end(); iter++) {
+                if (iter->roomID == r.roomID) {
+                    serve.getRoom(r.roomID)->updateFee(iter->time-iter->serveTimePoint);
+                    iter->serveTimePoint = iter->time;
+                }
+            }
+
+            serve.getRoom(r.roomID)->getReport()->updateTimesDispatch();
+
+            roominfo_t r1;
+            r1.serveTimePoint=10;
+            r1.time=10;
+            r1.roomID=wait_room[i].roomID;
+            serve_room.push_back(r1);
+
+            serve.getRoom(r1.roomID)->state="ON";
+            qDebug()<<"放入了服务队列"<<r1.roomID;
+            for(j=0;j<wait_room.size();j++)
+                if(wait_room[j].roomID==r1.roomID)
+                    wait_room.remove(j);
+            serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
+        }
+    }
+    if(serve_room.size()<3&&wait_room.size()>0){
+        roominfo_t r1;
+        r1.serveTimePoint=10;
+        r1.time=10;
+        r1.roomID=wait_room[sroom].roomID;
+        serve_room.push_back(r1);
+        serve.getRoom(r1.roomID)->getReport()->updateTimesDispatch();
+        wait_room.remove(sroom);
+        serve.getRoom(r1.roomID)->state="ON";
+        qDebug()<<"放入了服务队列"<<r1.roomID;
+    }
+>>>>>>> e2ffd519c51e79e0c7712a467783f602aa91d6ce
 }
